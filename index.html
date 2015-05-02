@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="taxonApp">
+<head>
+	<title>PaleoNeighbor</title>
+	<meta charset="utf-8">
+	<link href="angucomplete.css" rel="stylesheet">
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjvGriKgT0Yvo4Udug6KbwNNRG3UwpE-A"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<script src="js/angucomplete.js"></script>
+	<script src="js/default.js"></script>
+</head>
+<body>
+<div ng-controller="TaxonController as taxonCtrl">
+	<form ng-submit="taxonCtrl.getTaxons()">
+		<p>Name of taxon: 
+			<angucomplete id="members"
+              placeholder="Search taxa"
+              pause="400"
+              selectedobject="testObj"
+              url="https://paleobiodb.org/data1.1/taxa/auto.json?limit=10&name="
+              datafield="records"
+              titlefield="nam"
+              inputclass="form-control form-control-small" selectedobject="searchText" />
+			<button type="submit">Search</button>
+		</p>
+	</form>
+
+	<div class="summary" ng-show="taxonCtrl.resultsReturned">
+		<h2>{{taxonCtrl.searchText}} Summary</h2>
+		<p>{{taxonCtrl.count}} individuals</p>
+		<p>Age range: {{taxonCtrl.eag}}–{{taxonCtrl.lag}}Ma</p>
+		<p>Geologic formations:
+			<ul>
+				<li ng-repeat="(form,count) in taxonCtrl.formations">{{form}} ({{count}})</li>
+			</ul>
+		</p>
+	</div>
+
+	<div id="mapCanvas" style="width:100%; height:400px" ng-show="taxonCtrl.resultsReturned"></div>
+
+	<ol id="holder">
+		<li ng-show="taxonCtrl.loading">loading ...</li>
+		<li ng-repeat="taxon in taxonCtrl.taxonList"><i>{{taxon.mna}}</i> (<i>{{taxon.fml}}</i>) in {{taxon.sta}}, {{taxon.cc2}}</li>
+	</ol>
+
+</div>
+</body>
+</html>
