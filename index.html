@@ -3,31 +3,30 @@
 <head>
 	<title>PaleoNeighbor</title>
 	<meta charset="utf-8">
-	<link href="angucomplete.css" rel="stylesheet">
+	<link href="angucomplete-alt.css" rel="stylesheet">
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjvGriKgT0Yvo4Udug6KbwNNRG3UwpE-A"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-	<script src="js/angucomplete.js"></script>
+	<script src="js/angucomplete-alt.js"></script>
 	<script src="js/default.js"></script>
 </head>
 <body>
 <div ng-controller="TaxonController as taxonCtrl">
 	<form ng-submit="taxonCtrl.getTaxons()">
 		<p>Name of taxon: 
-			<angucomplete id="members"
+			<angucomplete-alt id="members"
               placeholder="Search taxa"
               pause="400"
-              selectedobject="testObj"
-              url="https://paleobiodb.org/data1.1/taxa/auto.json?limit=10&name="
-              datafield="records"
-              titlefield="nam"
-              inputclass="form-control form-control-small" selectedobject="searchText" />
+              remote-url="https://paleobiodb.org/data1.1/taxa/auto.json?limit=10&name="
+              remote-url-data-field="records"
+              title-field="nam"
+              input-class="form-control form-control-small" selected-object="searchText" autofocus />
 			<button type="submit">Search</button>
 		</p>
 	</form>
 
 	<div class="summary" ng-show="taxonCtrl.resultsReturned">
-		<h2>{{taxonCtrl.searchText}} Summary</h2>
+		<h2>{{searchText.title}} Summary</h2>
 		<p>{{taxonCtrl.count}} individuals</p>
 		<p>Age range: {{taxonCtrl.eag}}–{{taxonCtrl.lag}}Ma</p>
 		<p>Geologic formations:

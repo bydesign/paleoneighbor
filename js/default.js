@@ -1,4 +1,4 @@
-angular.module('taxonApp', ["angucomplete"])
+angular.module('taxonApp', ["angucomplete-alt"])
 	.controller('TaxonController', function($http, $scope) {
 		console.log('controller initialized');
 		var taxonCtrl = this;
@@ -7,9 +7,9 @@ angular.module('taxonApp', ["angucomplete"])
 		taxonCtrl.getTaxons = function() {
 			taxonCtrl.loading = true;
 			taxonCtrl.resultsReturned = false;
-			console.log('taxon control');
+			console.log('get taxons');
 			var url = 'https://paleobiodb.org/data1.1/occs/list.json?show=loc,time,coords,phylo,stratext,lithext,abund,geo&base_name=';
-			url += taxonCtrl.searchText;
+			url += $scope.searchText.title;
 			taxonCtrl.eag = 9999999999999;
 			taxonCtrl.lag = 0;
 			$http.get(url).
@@ -51,8 +51,6 @@ angular.module('taxonApp', ["angucomplete"])
 						}
 					});
 					taxonCtrl.formations = formationObjs;
-					console.log(taxonCtrl.eag);
-					console.log(taxonCtrl.lag);
 					
 					//google.maps.event.addDomListener(window, 'load', initialize);
 
